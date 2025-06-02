@@ -37,13 +37,16 @@ namespace FruitCutter
             ActionManager.OnStartCounter += StartCounter;
             ActionManager.OnResetGameSceneUi += ResetGameSceneUI;
             ActionManager.ToggleLevelUI += ToggleLevelUI;
-            
+            ActionManager.OnUpdatePlayerScore += UpdateScoreTxt;
+
         }
         private void OnDisable()
         {
             ActionManager.OnStartCounter -= StartCounter;
             ActionManager.OnResetGameSceneUi -= ResetGameSceneUI;
             ActionManager.ToggleLevelUI -= ToggleLevelUI;
+            ActionManager.OnUpdatePlayerScore -= UpdateScoreTxt;
+
         }
 
         #endregion Unity Methods
@@ -93,6 +96,11 @@ namespace FruitCutter
         private void ResetGameSceneUI()
         {
             scoreText.text = "";
+        }
+
+        private void UpdateScoreTxt(int value)
+        {
+            scoreText.text = value.ToString();  
         }
        
         private void ToggleLevelUI(bool isActive)

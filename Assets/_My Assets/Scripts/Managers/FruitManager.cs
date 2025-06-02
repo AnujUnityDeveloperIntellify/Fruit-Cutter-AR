@@ -65,9 +65,10 @@ namespace FruitCutter
             float xForce = 0f;
             float yForce = Random.Range(minYForce, maxYForce);
             //float yForce = maxYForce;
-            Vector3 localForce = new Vector3(xForce, yForce, 0f);
-            Vector3 worldForce = arCamera.TransformDirection(localForce);
-            currentFruit.AddForce(worldForce, ForceMode.Impulse);
+            Vector3 bounceForce = new Vector3(xForce, yForce, 0f);
+            // Vector3 localForce = new Vector3(xForce, yForce, 0f);
+            //Vector3 worldForce = arCamera.TransformDirection(localForce);
+            currentFruit.AddForce(bounceForce, ForceMode.Impulse);
 
             if (!activeFruits.Contains(currentFruit))
                 activeFruits.Add(currentFruit);
@@ -130,7 +131,7 @@ namespace FruitCutter
             fruit.angularVelocity = Vector3.zero;
             fruit.transform.rotation = Quaternion.identity;
             fruit.gameObject.SetActive(false);
-            fruit.transform.position = initialFruitPos;
+            fruit.transform.position = new Vector3(initialFruitPos.x, initialFruitPos.y,spawnDistance);
         }
         private void DeactivateFruit(Rigidbody hitFruit)
         {

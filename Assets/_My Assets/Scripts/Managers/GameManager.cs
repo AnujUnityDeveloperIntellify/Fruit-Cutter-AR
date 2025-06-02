@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Vuforia;
 
@@ -17,12 +18,12 @@ namespace FruitCutter
         internal static LevelState currentLevelState;
         [SerializeField] private ObserverBehaviour observerBehaviour;
         internal static string FruitTag = "Fruit";
+        [SerializeField] private TextMeshProUGUI TargetStatusTxt;
         // Start is called before the first frame update
         void Start()
         {
             ActionManager.ToggleImageTracker?.Invoke(false);
         }
-
         private void OnEnable()
         {
             currentLevelState = LevelState.None;
@@ -39,6 +40,7 @@ namespace FruitCutter
 
         public void OnTragetImageFound()
         {
+           // TargetStatusTxt.text = "Target Found";
 #if UNITY_ANDROID
             if (currentLevelState == LevelState.YetToStart) 
             {
@@ -49,23 +51,23 @@ namespace FruitCutter
         }
         public void OnTargetImageLost()
         {
-           /* if (currentLevelState == LevelState.Start)
-            {
-                ActionManager.OnGameOver?.Invoke();
-            }*/
+           // TargetStatusTxt.text = "Target Lost";
+            /* if (currentLevelState == LevelState.Start)
+             {
+                 ActionManager.OnGameOver?.Invoke();
+             }*/
         }
 
         private void LevelStart()
         {
+            ActionManager.OnResetPlayerData?.Invoke();  
             ActionManager.OnResetGameSceneUi?.Invoke();
             ActionManager.ToggleLevelUI?.Invoke(true);
-           
             ActionManager.OnStartFruitSpwan?.Invoke();
         }
         private void GameOver()
         {
             currentLevelState = LevelState.None;
-           // ActionManager.ToggleLevelUI?.Invoke(false);
             ActionManager.ToggleGameOverUI?.Invoke(true);
         }
         private void ToggleImageTracker(bool isActive)

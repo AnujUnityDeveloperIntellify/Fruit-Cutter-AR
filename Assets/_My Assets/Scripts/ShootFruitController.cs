@@ -26,25 +26,25 @@ namespace FruitCutter
         {
          
 #if UNITY_ANDROID
-            if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
+            if (Input.touchCount == 1 && (Input.GetTouch(0).phase == TouchPhase.Began || Input.GetTouch(0).phase ==TouchPhase.Moved))
             {
                 Ray ray = arCamera.ScreenPointToRay(Input.GetTouch(0).position);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit, 40f, fruitLayer))
                 {
-                    StartCoroutine(OnCurrentFruitHit(hit.collider.gameObject));
-
+                    OnCurrentFruitHit(hit.collider.gameObject);
                 }
             }
 #endif
 
         }
-        private IEnumerator OnCurrentFruitHit(GameObject fruit)
+        private void OnCurrentFruitHit(GameObject fruit)
         {
             rbFruit = fruit.GetComponent<Rigidbody>();
-            yield return new WaitForSeconds(0.8f);
             ActionManager.OnDeactivateFruit?.Invoke(rbFruit);
+            ActionManager.OnEarnScore?.Invoke();
+
         }
 
     }

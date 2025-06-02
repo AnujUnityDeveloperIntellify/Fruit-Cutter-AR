@@ -26,6 +26,14 @@ namespace FruitCutter
 
         internal static Action OnlevelStart;
         internal static Action OnGameOver;
+
+
+        internal static Action OnEarnScore;
+        internal static Action OnResetPlayerData;
+        internal static Func<int> GetPlayerCurrentScore;
+        internal static Func<int> GetPlayerCurrentlives;
+
+        internal static Action<int> OnUpdatePlayerScore;
     }
 }
 

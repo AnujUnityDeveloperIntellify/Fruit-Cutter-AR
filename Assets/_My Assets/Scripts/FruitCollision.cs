@@ -6,7 +6,7 @@ namespace FruitCutter
 {
     public class FruitCollision : MonoBehaviour
     {
-       
+        private float rotationForce = 200;
         private Rigidbody rbFruit;
         private void Awake()
         {
@@ -24,6 +24,10 @@ namespace FruitCutter
                     ActionManager.OnDeactivateFruit?.Invoke(rbFruit);
                 }
             }
+        }
+        private void Update()
+        {
+            transform.Rotate(Vector3.up * Time.deltaTime * rotationForce);
         }
     }
 }
