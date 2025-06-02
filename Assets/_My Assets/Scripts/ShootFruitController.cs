@@ -41,6 +41,7 @@ namespace FruitCutter
         }
         private void OnCurrentFruitHit(GameObject fruit)
         {
+            ActionManager.OnPlayFruitCutAudio?.Invoke();
             rbFruit = fruit.GetComponent<Rigidbody>();
             ActionManager.OnDeactivateFruit?.Invoke(rbFruit);
             ActionManager.OnEarnScore?.Invoke();

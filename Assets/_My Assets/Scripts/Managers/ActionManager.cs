@@ -32,8 +32,9 @@ namespace FruitCutter
         internal static Action OnResetPlayerData;
         internal static Func<int> GetPlayerCurrentScore;
         internal static Func<int> GetPlayerCurrentlives;
-
         internal static Action<int> OnUpdatePlayerScore;
+
+        internal static Action OnPlayFruitCutAudio;
     }
 }
 
