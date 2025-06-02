@@ -868,14 +868,14 @@ MonoBehaviour:
   PreviewVisible: 1
   RuntimeOcclusion: 0
   RuntimeCollider: 0
-  mTrackableName: marker12
+  mTrackableName: SampleTargetImage
   mInitializedInEditor: 1
   mDataSetPath: 
-  mAspectRatio: 1
+  mAspectRatio: 0.70149255
   mImageTargetType: 3
   mWidth: 0.2
-  mHeight: 0.2
-  mRuntimeTexture: {fileID: 2800000, guid: ec357ea140b303a47af17495f35818e2, type: 3}
+  mHeight: 0.14029852
+  mRuntimeTexture: {fileID: 2800000, guid: d932274193e97f1419b562788ae4c947, type: 3}
   mMotionHint: 1
   mTrackingOptimization: 0
   mTrackingOptimizationNeedsUpgrade: 0
@@ -909,7 +909,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mObserverBehaviour: {fileID: 288487347}
   mHiddenRoot: {fileID: 0}
-  mTargetName: marker12
+  mTargetName: SampleTargetImage
   mDatasetName: 
   mCastedBehaviour: {fileID: 288487347}
   mMeshFilter: {fileID: 0}
@@ -2507,6 +2507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   observerBehaviour: {fileID: 288487347}
   TargetStatusTxt: {fileID: 2107150321}
+  TestTarget: 1
 --- !u!1 &1342222732
 GameObject:
   m_ObjectHideFlags: 0

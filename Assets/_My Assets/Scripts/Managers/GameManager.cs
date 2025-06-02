@@ -19,10 +19,14 @@ namespace FruitCutter
         [SerializeField] private ObserverBehaviour observerBehaviour;
         internal static string FruitTag = "Fruit";
         [SerializeField] private TextMeshProUGUI TargetStatusTxt;
+        [SerializeField] private bool TestTarget;
         // Start is called before the first frame update
         void Start()
         {
-            ActionManager.ToggleImageTracker?.Invoke(false);
+            if(!TestTarget)
+            {
+                ActionManager.ToggleImageTracker?.Invoke(false);
+            }
         }
         private void OnEnable()
         {
@@ -40,7 +44,11 @@ namespace FruitCutter
 
         public void OnTragetImageFound()
         {
-           // TargetStatusTxt.text = "Target Found";
+            if(TestTarget)
+            {
+                TargetStatusTxt.text = "Target Found";
+            }
+           
 #if UNITY_ANDROID
             if (currentLevelState == LevelState.YetToStart) 
             {
@@ -51,7 +59,11 @@ namespace FruitCutter
         }
         public void OnTargetImageLost()
         {
-           // TargetStatusTxt.text = "Target Lost";
+            if(TestTarget)
+            {
+                TargetStatusTxt.text = "Target Lost";
+            }
+            
             /* if (currentLevelState == LevelState.Start)
              {
                  ActionManager.OnGameOver?.Invoke();
