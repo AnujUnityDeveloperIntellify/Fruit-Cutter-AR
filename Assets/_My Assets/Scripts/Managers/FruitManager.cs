@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 namespace FruitCutter
@@ -8,33 +10,135 @@ namespace FruitCutter
     {
         [SerializeField] private Transform arCamera;
         [SerializeField] private float spawnDistance;
+        [SerializeField] private float verticalOffset = -0.5f;
+        [SerializeField] private float horizontalRange = 0.1f;
+
+        [Header("Launch Force Settings")]
+         private float minXForce = -0.08f;
+         private float maxXForce = 0.08f;
+         private float minYForce = 2f;
+         private float maxYForce = 2.8f;
+
         [SerializeField] private int fruitCount;
-        private Vector3 reSpawnPos;
         [SerializeField] private GameObject currentFruit;
 
+        [SerializeField] private List<Rigidbody> AllFruitLists;
+        [SerializeField] private List<Rigidbody> activeFruits = new();
+        private Coroutine spwanFruit_Coroutine;
+        [SerializeField] private Vector3 initialFruitPos;
         private void OnEnable()
         {
-            ActionManager.OnRespwanFruit += RespwanFruit;
+            ActionManager.OnRespawnFruit += RespawnFruit;
             ActionManager.OnStartFruitSpwan += StartFruitSpwan;
-            reSpawnPos = arCamera.position + arCamera.forward * spawnDistance;
+            ActionManager.OnResetAllFruits += ResetAllFruits;
+            ActionManager.OnStopFruitSpwan += StopFruitSpwan;
+            ActionManager.OnDeactivateFruit += DeactivateFruit;
+
         }
 
         private void OnDisable()
         {
-            ActionManager.OnRespwanFruit -= RespwanFruit;
+            ActionManager.OnRespawnFruit -= RespawnFruit;
             ActionManager.OnStartFruitSpwan -= StartFruitSpwan;
-        }
-        private void RespwanFruit()
-        {
-            currentFruit.GetComponent<Rigidbody>().velocity = Vector3.zero; 
-            currentFruit.transform.position = reSpawnPos;
-            currentFruit.SetActive(true);
+            ActionManager.OnResetAllFruits -= ResetAllFruits;
+            ActionManager.OnStopFruitSpwan -= StopFruitSpwan;
+            ActionManager.OnDeactivateFruit -= DeactivateFruit;
 
+        }
+        private void Start()
+        {
+            
+        }
+        private void RespawnFruit(Rigidbody currentFruit)
+        {
+            Vector3 spawnPos = arCamera.position + arCamera.forward * spawnDistance;
+            spawnPos.y += verticalOffset;
+            //spawnPos += arCamera.right * Random.Range(-horizontalRange, horizontalRange);
+
+            currentFruit.velocity = Vector3.zero;
+            currentFruit.angularVelocity = Vector3.zero;
+            currentFruit.transform.position = spawnPos;
+            currentFruit.transform.rotation = Quaternion.identity;
+            currentFruit.gameObject.SetActive(true);
+
+           // float xForce = Random.Range(minXForce, maxXForce);
+            float xForce = 0f;
+            float yForce = Random.Range(minYForce, maxYForce);
+            //float yForce = maxYForce;
+            Vector3 localForce = new Vector3(xForce, yForce, 0f);
+            Vector3 worldForce = arCamera.TransformDirection(localForce);
+            currentFruit.AddForce(worldForce, ForceMode.Impulse);
+
+            if (!activeFruits.Contains(currentFruit))
+                activeFruits.Add(currentFruit);
+#if UNITY_EDITOR
+            //EditorApplication.isPaused = true;
+#elif UNITY_ANDROID
+
+#endif
         }
         private void StartFruitSpwan()
         {
-            RespwanFruit();
-
+            ActionManager.OnResetAllFruits?.Invoke();
+            spwanFruit_Coroutine = StartCoroutine(SpawningFruit());
+        }
+        private void StopFruitSpwan()
+        {
+            StopCoroutine(spwanFruit_Coroutine);
+            ActionManager.OnResetAllFruits?.Invoke();   
+        }
+        private IEnumerator SpawningFruit()
+        {
+            yield return new WaitForSeconds(1.0f);
+            while (GameManager.currentLevelState == LevelState.Start)
+            {
+                List<Rigidbody> inactiveFruits = GetInactiveFruits(AllFruitLists);
+                if (inactiveFruits.Count > 0)
+                {
+                    Rigidbody selected = inactiveFruits[Random.Range(0, inactiveFruits.Count)];
+                    ActionManager.OnRespawnFruit?.Invoke(selected);
+                }
+               // yield break;
+              yield return new WaitForSeconds(1.0f); 
+            }
+        }
+        private List<Rigidbody> GetInactiveFruits(List<Rigidbody> fruitLists)
+        {
+            List<Rigidbody> inActiveFruits = new List<Rigidbody>();
+            inActiveFruits.Clear();
+            foreach (Rigidbody rb in fruitLists) 
+            {
+                if(!rb.gameObject.activeInHierarchy)
+                {
+                    inActiveFruits.Add(rb); 
+                }
+            }
+            return inActiveFruits;
+        }
+        private void ResetAllFruits()
+        {
+            foreach (Rigidbody rb in AllFruitLists)
+            {
+                ResetFruit(rb);
+            }
+            activeFruits.Clear();
+        }
+        private void ResetFruit(Rigidbody fruit)
+        {
+           // Debug.LogError("Reset Fruit " + fruit.name);
+            fruit.velocity = Vector3.zero;
+            fruit.angularVelocity = Vector3.zero;
+            fruit.transform.rotation = Quaternion.identity;
+            fruit.gameObject.SetActive(false);
+            fruit.transform.position = initialFruitPos;
+        }
+        private void DeactivateFruit(Rigidbody hitFruit)
+        {
+            if (activeFruits.Contains(hitFruit))
+            {
+                ResetFruit(hitFruit);
+                activeFruits.Remove(hitFruit);
+            }
         }
     }
 }

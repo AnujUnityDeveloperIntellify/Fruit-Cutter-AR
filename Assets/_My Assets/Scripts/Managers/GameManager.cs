@@ -16,7 +16,7 @@ namespace FruitCutter
     {
         internal static LevelState currentLevelState;
         [SerializeField] private ObserverBehaviour observerBehaviour;
-        private string FruitTag = "Fruit";
+        internal static string FruitTag = "Fruit";
         // Start is called before the first frame update
         void Start()
         {
@@ -39,11 +39,13 @@ namespace FruitCutter
 
         public void OnTragetImageFound()
         {
+#if UNITY_ANDROID
             if (currentLevelState == LevelState.YetToStart) 
             {
                 currentLevelState = LevelState.Start;
                 ActionManager.OnStartCounter?.Invoke();
             }
+#endif
         }
         public void OnTargetImageLost()
         {
@@ -57,12 +59,13 @@ namespace FruitCutter
         {
             ActionManager.OnResetGameSceneUi?.Invoke();
             ActionManager.ToggleLevelUI?.Invoke(true);
+           
             ActionManager.OnStartFruitSpwan?.Invoke();
         }
         private void GameOver()
         {
             currentLevelState = LevelState.None;
-            ActionManager.ToggleLevelUI?.Invoke(false);
+           // ActionManager.ToggleLevelUI?.Invoke(false);
             ActionManager.ToggleGameOverUI?.Invoke(true);
         }
         private void ToggleImageTracker(bool isActive)

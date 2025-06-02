@@ -11,11 +11,7 @@ namespace FruitCutter
         #region Variables
         [SerializeField] private TextMeshProUGUI countDownTxt;
         [SerializeField] private TextMeshProUGUI scoreText;
-        [SerializeField] private Button startBtn;
-        [SerializeField] private Button restartBtn;
         [SerializeField] private GameObject LevelUIHolder;
-        [SerializeField] private GameObject GameOverUIHolder;
-        [SerializeField] private GameObject MainMenuUIHolder;
 
         private const float animationDuration = 0.6f;
         private const float delayBetweenTexts = 0.2f;
@@ -27,20 +23,19 @@ namespace FruitCutter
         #region Unity Methods
         private void Awake()
         {
-            startBtn.onClick.AddListener(OnClickStartBtn);
-            restartBtn.onClick.AddListener(OnClickRestartBtn);
+            
         }
         void Start()
         {
-
+#if UNITY_EDITOR
+            GameManager.currentLevelState = LevelState.Start;
+            ActionManager.OnStartCounter?.Invoke();
+#endif
         }
         private void OnEnable()
         {
             ActionManager.OnStartCounter += StartCounter;
             ActionManager.OnResetGameSceneUi += ResetGameSceneUI;
-
-            ActionManager.ToggleGameOverUI += ToggleGameOverUI;
-            ActionManager.ToggleMainMenuUI += ToggleMainMenuUI;
             ActionManager.ToggleLevelUI += ToggleLevelUI;
             
         }
@@ -48,9 +43,6 @@ namespace FruitCutter
         {
             ActionManager.OnStartCounter -= StartCounter;
             ActionManager.OnResetGameSceneUi -= ResetGameSceneUI;
-
-            ActionManager.ToggleGameOverUI -= ToggleGameOverUI;
-            ActionManager.ToggleMainMenuUI -= ToggleMainMenuUI;
             ActionManager.ToggleLevelUI -= ToggleLevelUI;
         }
 
@@ -102,25 +94,7 @@ namespace FruitCutter
         {
             scoreText.text = "";
         }
-        private void OnClickStartBtn()
-        {
-            GameManager.currentLevelState = LevelState.YetToStart;
-            ActionManager.ToggleMainMenuUI?.Invoke(false);
-            ActionManager.ToggleImageTracker?.Invoke(true);
-        }
-        private void OnClickRestartBtn()
-        {
-            ActionManager.ToggleMainMenuUI?.Invoke(true);
-            ActionManager.ToggleGameOverUI?.Invoke(false);
-        }
-        private void ToggleGameOverUI(bool isActive)
-        {
-            GameOverUIHolder.SetActive(isActive);   
-        }
-        private void ToggleMainMenuUI(bool isActive)
-        {
-            MainMenuUIHolder.SetActive(isActive);   
-        }
+       
         private void ToggleLevelUI(bool isActive)
         {
             LevelUIHolder.SetActive(isActive);  

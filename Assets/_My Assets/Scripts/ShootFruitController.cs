@@ -9,6 +9,7 @@ namespace FruitCutter
     {
         private Camera arCamera;
         [SerializeField] private LayerMask fruitLayer;
+        private Rigidbody rbFruit;
         void Start()
         {
             arCamera= GetComponent<Camera>();
@@ -23,22 +24,27 @@ namespace FruitCutter
 
         private void ShootRaycast()
         {
+         
+#if UNITY_ANDROID
             if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 Ray ray = arCamera.ScreenPointToRay(Input.GetTouch(0).position);
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit,40f,fruitLayer))
+                if (Physics.Raycast(ray, out hit, 40f, fruitLayer))
                 {
-                    hit.collider.gameObject.SetActive(false);
-                    StartCoroutine(OnCurrentFruitHit());
+                    StartCoroutine(OnCurrentFruitHit(hit.collider.gameObject));
+
                 }
             }
+#endif
+
         }
-        private IEnumerator OnCurrentFruitHit()
+        private IEnumerator OnCurrentFruitHit(GameObject fruit)
         {
+            rbFruit = fruit.GetComponent<Rigidbody>();
             yield return new WaitForSeconds(0.8f);
-            ActionManager.OnRespwanFruit?.Invoke();
+            ActionManager.OnDeactivateFruit?.Invoke(rbFruit);
         }
 
     }
