@@ -14,6 +14,9 @@ namespace FruitCutter
         internal static Action<bool> ToggleLevelUI;
         internal static Action<bool> ToggleGameOverUI;
         internal static Action<bool> ToggleGameSceneUI;
+
+        internal static Func<int> GetHighestScore;
+        internal static Action OnSavedHighestScore;
         #endregion GameScene UI Actions
 
         internal static Action<bool> ToggleImageTracker;

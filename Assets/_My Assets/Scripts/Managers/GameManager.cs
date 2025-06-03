@@ -103,6 +103,7 @@ namespace FruitCutter
         }
         private void GameOver()
         {
+            ActionManager.OnSavedHighestScore?.Invoke();
             ActionManager.ToggleImageTracker?.Invoke(false);
             currentLevelState = LevelState.None;
             ActionManager.ToggleGameOverUI?.Invoke(true);

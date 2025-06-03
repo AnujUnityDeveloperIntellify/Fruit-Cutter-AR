@@ -13,6 +13,9 @@ namespace FruitCutter
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private GameObject LevelUIHolder;
 
+        [SerializeField] private GameObject HighestScoreHolder;
+        [SerializeField] private TextMeshProUGUI highestScoreText;
+
         private const float animationDuration = 0.6f;
         private const float delayBetweenTexts = 0.2f;
 
@@ -36,7 +39,7 @@ namespace FruitCutter
             ActionManager.OnResetGameSceneUi += ResetGameSceneUI;
             ActionManager.ToggleLevelUI += ToggleLevelUI;
             ActionManager.OnUpdatePlayerScore += UpdateScoreTxt;
-
+            
 
 
             ActionManager.OnResetGameSceneUi?.Invoke();
@@ -45,6 +48,8 @@ namespace FruitCutter
             ActionManager.OnStartCounter?.Invoke();
 #endif
 
+            SetHighestScore((int)ActionManager.GetHighestScore?.Invoke());
+
         }
         private void OnDisable()
         {
@@ -52,6 +57,7 @@ namespace FruitCutter
             ActionManager.OnResetGameSceneUi -= ResetGameSceneUI;
             ActionManager.ToggleLevelUI -= ToggleLevelUI;
             ActionManager.OnUpdatePlayerScore -= UpdateScoreTxt;
+            
 
         }
 
@@ -116,6 +122,18 @@ namespace FruitCutter
         private void ToggleLevelUI(bool isActive)
         {
             LevelUIHolder.SetActive(isActive);  
+        }
+
+        private void SetHighestScore(int value)
+        {
+            if(value > 0)
+            {
+                HighestScoreHolder.SetActive(true);
+            }
+            else
+            {
+                HighestScoreHolder.SetActive(false);    
+            }
         }
         #endregion Custom Methods
 
