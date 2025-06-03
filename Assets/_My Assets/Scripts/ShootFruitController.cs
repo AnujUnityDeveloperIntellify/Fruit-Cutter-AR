@@ -14,11 +14,19 @@ namespace FruitCutter
         [SerializeField] private LayerMask fruitLayer;
         [SerializeField] private LayerMask bombLayer;
         private BombController bombController;
-        private Rigidbody rbFruit;
+        private FruitController fruitController;
       
         void Start()
         {
             arCamera= GetComponent<Camera>();
+        }
+        private void OnEnable()
+        {
+            ActionManager.RotateSpriteTowardCamera += FaceSpriteTowardsCamera;
+        }
+        private void OnDisable()
+        {
+            ActionManager.RotateSpriteTowardCamera -= FaceSpriteTowardsCamera;
         }
         void Update()
         {
@@ -41,7 +49,11 @@ namespace FruitCutter
 
                     if (Physics.Raycast(ray, out hit, 40f, fruitLayer ))
                     {
-                        OnCurrentFruitHit(hit.collider.gameObject);
+                        fruitController = hit.collider.gameObject.GetComponent<FruitController>();
+                        if(fruitController != null)
+                        {
+                            OnCurrentFruitHit(fruitController);
+                        }
                     }
                     else if (Physics.Raycast(ray, out hit, 40f, bombLayer))
                     {
@@ -56,11 +68,10 @@ namespace FruitCutter
            
 #endif
         }
-        private void OnCurrentFruitHit(GameObject fruit)
+        private void OnCurrentFruitHit(FruitController fruitController)
         {
             ActionManager.OnPlayFruitCutAudio?.Invoke();
-            rbFruit = fruit.GetComponent<Rigidbody>();
-            ActionManager.OnDeactivateFruit?.Invoke(rbFruit);
+            fruitController.OnFruitCut();
             ActionManager.OnEarnScore?.Invoke();
 
         }
@@ -68,7 +79,21 @@ namespace FruitCutter
         {
             bombController.OnBombBlast();
         }
+        private void FaceSpriteTowardsCamera(SpriteRenderer spriteRenderer)
+        {
+            if (spriteRenderer == null || arCamera == null) return;
 
+            Transform spriteTransform = spriteRenderer.transform;
+
+            Vector3 cameraPosition = arCamera.transform.position;
+            Vector3 directionToCamera = cameraPosition - spriteTransform.position;
+            directionToCamera.y = 0f;
+            if (directionToCamera.sqrMagnitude > 0.001f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(directionToCamera);
+                spriteTransform.rotation = targetRotation;
+            }
+        }
     }
 }
 // if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))

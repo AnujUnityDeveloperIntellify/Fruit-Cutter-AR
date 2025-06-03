@@ -14,8 +14,8 @@ namespace FruitCutter
         private float spawnDistance;
 
         [Header("Launch Force Settings")]
-         private float minXForce = -0.1f;
-         private float maxXForce = 0.1f;
+         private float minXForce = -0.2f;
+         private float maxXForce = 0.2f;
          private float minYForce = 2f;
          private float maxYForce = 2.8f;
 

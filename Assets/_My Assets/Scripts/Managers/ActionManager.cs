@@ -37,6 +37,7 @@ namespace FruitCutter
 
         internal static Action OnPlayFruitCutAudio;
         internal static Action OnPlayGrenadeBlastAudio;
+        internal static Action<SpriteRenderer> RotateSpriteTowardCamera;
     }
 }
 

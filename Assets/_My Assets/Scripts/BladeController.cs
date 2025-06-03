@@ -26,7 +26,6 @@ namespace FruitCutter
         private void Update()
         {
             if(GameManager.currentLevelState == LevelState.Start)
-            //if(true)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
