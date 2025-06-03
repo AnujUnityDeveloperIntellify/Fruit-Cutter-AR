@@ -19,13 +19,17 @@ namespace FruitCutter
         [SerializeField] private ObserverBehaviour observerBehaviour;
         internal static string FruitTag = "Fruit";
         [SerializeField] private TextMeshProUGUI TargetStatusTxt;
-        [SerializeField] private bool TestTarget;
+        // [SerializeField] private bool TestTarget;
         // Start is called before the first frame update
         void Start()
         {
-            if(!TestTarget)
+            /*if (!TestTarget)
             {
                 ActionManager.ToggleImageTracker?.Invoke(false);
+            }*/
+            if (observerBehaviour)
+            {
+                observerBehaviour.OnTargetStatusChanged += OnTargetStatusChanged;
             }
         }
         private void OnEnable()
@@ -44,32 +48,52 @@ namespace FruitCutter
 
         public void OnTragetImageFound()
         {
-            if(TestTarget)
+           /* if (TestTarget)
             {
                 TargetStatusTxt.text = "Target Found";
-            }
-           
+            }*/
+
 #if UNITY_ANDROID
-            if (currentLevelState == LevelState.YetToStart) 
+           /* if (currentLevelState == LevelState.YetToStart)
             {
                 currentLevelState = LevelState.Start;
                 ActionManager.OnStartCounter?.Invoke();
-            }
+            }*/
 #endif
         }
         public void OnTargetImageLost()
         {
-            if(TestTarget)
+           /* if (TestTarget)
             {
                 TargetStatusTxt.text = "Target Lost";
-            }
-            
-            /* if (currentLevelState == LevelState.Start)
-             {
-                 ActionManager.OnGameOver?.Invoke();
-             }*/
+            }*/
+
+           /* if (currentLevelState == LevelState.Start)
+            {
+                ActionManager.OnGameOver?.Invoke();
+            }*/
         }
 
+        private void OnTargetStatusChanged(ObserverBehaviour behaviour, TargetStatus targetStatus)
+        {
+            TargetStatusTxt.text = $" {targetStatus.Status} | {targetStatus.StatusInfo}";
+            if(targetStatus.Status == Status.TRACKED)
+            {
+                if (currentLevelState == LevelState.YetToStart)
+                {
+                    currentLevelState = LevelState.Start;
+                    ActionManager.OnStartCounter?.Invoke();
+                }
+            }
+            else if (targetStatus.Status == Status.EXTENDED_TRACKED)
+            {
+                if (currentLevelState == LevelState.Start)
+                {
+                    ActionManager.OnStopFruitSpwan?.Invoke();
+                    ActionManager.OnGameOver?.Invoke();
+                }
+            }
+        }
         private void LevelStart()
         {
             ActionManager.OnResetPlayerData?.Invoke();  
