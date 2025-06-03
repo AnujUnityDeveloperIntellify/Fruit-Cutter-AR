@@ -19,6 +19,7 @@ namespace FruitCutter
         [SerializeField] private ObserverBehaviour observerBehaviour;
         internal static string FruitTag = "Fruit";
         [SerializeField] private TextMeshProUGUI TargetStatusTxt;
+        internal const float objectSpwanDistance = 1.5f;
         // [SerializeField] private bool TestTarget;
         // Start is called before the first frame update
         void Start()
@@ -111,7 +112,20 @@ namespace FruitCutter
         }
         private void ToggleImageTracker(bool isActive)
         {
-            observerBehaviour.enabled = isActive;
+            if (isActive)
+            {
+                StartCoroutine(RefreshObserver());
+            }
+            else
+            {
+                observerBehaviour.enabled = false;
+            }
+        }
+        private IEnumerator RefreshObserver()
+        {
+            observerBehaviour.enabled = false;
+            yield return null; 
+            observerBehaviour.enabled = true;
         }
     }
 }

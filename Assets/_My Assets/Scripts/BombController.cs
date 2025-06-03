@@ -55,11 +55,13 @@ namespace FruitCutter
         #region Custom Methods
         internal void OnBombBlast()
         {
+          
             ActionManager.OnStopFruitSpwan?.Invoke();
             ActionManager.OnPlayGrenadeBlastAudio?.Invoke();
-           // Debug.LogError("OnBomb Blast");
+            //Debug.LogError("OnBomb Blast");
             bombMR.enabled = false;
-            bombPS.gameObject.SetActive(true);
+            
+            bombPS.time = 0f;
             bombPS.Play();
             Invoke("OverLevel", 0.4f);
         }
@@ -70,7 +72,16 @@ namespace FruitCutter
         private void OnResetBomb()
         {
             bombMR.enabled = true;
-            bombPS.gameObject.SetActive(false);
+            bombPS.Clear();
+            bombPS.time = 0f;
+           // bombPS.gameObject.SetActive(false);
+        }
+        [ContextMenu("Blast")]
+        private void Blast()
+        {
+            bombPS.Clear();
+            bombPS.time = 0f;
+            bombPS.Play();
         }
         #endregion Custom Methods
     }

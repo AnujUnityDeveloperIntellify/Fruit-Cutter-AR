@@ -59,7 +59,7 @@ namespace FruitCutter
         private void BladeFollowMouse()
         {
             Vector3 mousePos = Input.mousePosition;
-            mousePos.z = 1.5f;
+            mousePos.z = GameManager.objectSpwanDistance;
             rb.position = Camera.main.ScreenToWorldPoint(mousePos);
         }
 

@@ -9,13 +9,13 @@ namespace FruitCutter
     public class FruitManager : MonoBehaviour
     {
         [SerializeField] private Transform arCamera;
-        [SerializeField] private float spawnDistance;
-        [SerializeField] private float verticalOffset = -0.5f;
-        [SerializeField] private float horizontalRange = 0.1f;
+        [SerializeField] private float verticalOffset;
+        [SerializeField] private float horizontalRange;
+        private float spawnDistance;
 
         [Header("Launch Force Settings")]
-         private float minXForce = -0.08f;
-         private float maxXForce = 0.08f;
+         private float minXForce = -0.1f;
+         private float maxXForce = 0.1f;
          private float minYForce = 2f;
          private float maxYForce = 2.8f;
 
@@ -28,6 +28,7 @@ namespace FruitCutter
         [SerializeField] private Vector3 initialFruitPos;
         private void OnEnable()
         {
+            spawnDistance = GameManager.objectSpwanDistance;
             ActionManager.OnRespawnFruit += RespawnFruit;
             ActionManager.OnStartFruitSpwan += StartFruitSpwan;
             ActionManager.OnResetAllFruits += ResetAllFruits;
@@ -54,7 +55,7 @@ namespace FruitCutter
         {
             Vector3 spawnPos = arCamera.position + arCamera.forward * spawnDistance;
             spawnPos.y += verticalOffset;
-            //spawnPos += arCamera.right * Random.Range(-horizontalRange, horizontalRange);
+            spawnPos += arCamera.right * Random.Range(-horizontalRange, horizontalRange);
 
             currentFruit.velocity = Vector3.zero;
             currentFruit.angularVelocity = Vector3.zero;
@@ -62,13 +63,11 @@ namespace FruitCutter
             currentFruit.transform.rotation = Quaternion.identity;
             currentFruit.gameObject.SetActive(true);
 
-           // float xForce = Random.Range(minXForce, maxXForce);
-            float xForce = 0f;
+            float xForce = Random.Range(minXForce, maxXForce);
+           // float xForce = 0f;
             float yForce = Random.Range(minYForce, maxYForce);
             //float yForce = maxYForce;
             Vector3 bounceForce = new Vector3(xForce, yForce, 0f);
-            // Vector3 localForce = new Vector3(xForce, yForce, 0f);
-            //Vector3 worldForce = arCamera.TransformDirection(localForce);
             currentFruit.AddForce(bounceForce, ForceMode.Impulse);
 
             if (!activeFruits.Contains(currentFruit))
