@@ -78,6 +78,7 @@ namespace FruitCutter
         }
         private void GameOver()
         {
+            ActionManager.ToggleImageTracker?.Invoke(false);
             currentLevelState = LevelState.None;
             ActionManager.ToggleGameOverUI?.Invoke(true);
             ActionManager.ToggleLevelUI?.Invoke(false);

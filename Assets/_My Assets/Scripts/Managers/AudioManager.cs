@@ -16,7 +16,7 @@ namespace FruitCutter
         private void Awake()
         {
             SetAudioForDevice(fruitCutAudioSource);
-            SetAudioForDevice(grenadeBlastAudioSource);
+           // SetAudioForDevice(grenadeBlastAudioSource);
 
         }
         void Start()

@@ -55,6 +55,7 @@ namespace FruitCutter
         #region Custom Methods
         internal void OnBombBlast()
         {
+            ActionManager.OnStopFruitSpwan?.Invoke();
             ActionManager.OnPlayGrenadeBlastAudio?.Invoke();
            // Debug.LogError("OnBomb Blast");
             bombMR.enabled = false;
