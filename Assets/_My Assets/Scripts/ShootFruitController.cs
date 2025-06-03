@@ -9,6 +9,8 @@ namespace FruitCutter
     {
         private Camera arCamera;
         [SerializeField] private LayerMask fruitLayer;
+        [SerializeField] private LayerMask bombLayer;
+        private BombController bombController;
         private Rigidbody rbFruit;
         void Start()
         {
@@ -35,6 +37,15 @@ namespace FruitCutter
                 {
                     OnCurrentFruitHit(hit.collider.gameObject);
                 }
+                else if(Physics.Raycast(ray, out hit, 40f, bombLayer))
+                {
+                    bombController = hit.collider.gameObject.GetComponent<BombController>();
+                    if(bombController!=null)
+                    {
+                        OnCurrentBombHit(bombController);
+                       
+                    }
+                }
             }
 #endif
 
@@ -46,6 +57,10 @@ namespace FruitCutter
             ActionManager.OnDeactivateFruit?.Invoke(rbFruit);
             ActionManager.OnEarnScore?.Invoke();
 
+        }
+        private void OnCurrentBombHit(BombController bombController)
+        {
+            bombController.OnBombBlast();
         }
 
     }

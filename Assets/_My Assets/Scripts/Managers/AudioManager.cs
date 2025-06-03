@@ -8,10 +8,17 @@ namespace FruitCutter
     {
         #region Variables
         [SerializeField] private AudioSource fruitCutAudioSource;
+        [SerializeField] private AudioSource grenadeBlastAudioSource;
         #endregion Variables
 
         #region Unity Methods
 
+        private void Awake()
+        {
+            SetAudioForDevice(fruitCutAudioSource);
+            SetAudioForDevice(grenadeBlastAudioSource);
+
+        }
         void Start()
         {
 
@@ -20,10 +27,12 @@ namespace FruitCutter
         private void OnEnable()
         {
             ActionManager.OnPlayFruitCutAudio += PlayFruitCutAudio;
+            ActionManager.OnPlayGrenadeBlastAudio += PlayGrenadeBlastAudio;
         }
         private void OnDisable()
         {
             ActionManager.OnPlayFruitCutAudio -= PlayFruitCutAudio;
+            ActionManager.OnPlayGrenadeBlastAudio -= PlayGrenadeBlastAudio;
         }
         #endregion Unity Methods
 
@@ -33,7 +42,21 @@ namespace FruitCutter
             fruitCutAudioSource.time = 0;   
             fruitCutAudioSource.Play();
         }
-        #endregion Custom Methods
+        private void PlayGrenadeBlastAudio()
+        {
+            grenadeBlastAudioSource.time = 0;
+            grenadeBlastAudioSource.Play();
+        }    
+
+        private void SetAudioForDevice(AudioSource audioSource)
+        {
+#if UNITY_EDITOR
+            audioSource.volume = 0f;
+#elif UNITY_ANDROID
+
+#endif
+        }
+#endregion Custom Methods
     }
 }
 

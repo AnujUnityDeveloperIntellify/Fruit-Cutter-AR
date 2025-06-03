@@ -7,6 +7,7 @@ TagManager:
   - Fruit
   - Ground
   - Blade
+  - Bomb
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Fruit
   - Ground
   - Blade
-  - 
+  - Bomb
   - 
   - 
   - 

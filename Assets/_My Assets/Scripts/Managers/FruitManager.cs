@@ -33,7 +33,7 @@ namespace FruitCutter
             ActionManager.OnResetAllFruits += ResetAllFruits;
             ActionManager.OnStopFruitSpwan += StopFruitSpwan;
             ActionManager.OnDeactivateFruit += DeactivateFruit;
-
+            ActionManager.OnResetBomb += ResetBomb;
         }
 
         private void OnDisable()
@@ -43,6 +43,7 @@ namespace FruitCutter
             ActionManager.OnResetAllFruits -= ResetAllFruits;
             ActionManager.OnStopFruitSpwan -= StopFruitSpwan;
             ActionManager.OnDeactivateFruit -= DeactivateFruit;
+            ActionManager.OnResetBomb -= ResetBomb;
 
         }
         private void Start()
@@ -139,6 +140,14 @@ namespace FruitCutter
             {
                 ResetFruit(hitFruit);
                 activeFruits.Remove(hitFruit);
+            }
+        }
+        private void ResetBomb(Rigidbody hitBomb)
+        {
+            if(activeFruits.Contains(hitBomb))
+            {
+                ResetFruit(hitBomb);
+                activeFruits.Remove(hitBomb);
             }
         }
     }

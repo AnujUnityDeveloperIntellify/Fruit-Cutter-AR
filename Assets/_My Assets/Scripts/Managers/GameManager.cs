@@ -73,7 +73,6 @@ namespace FruitCutter
         private void LevelStart()
         {
             ActionManager.OnResetPlayerData?.Invoke();  
-            ActionManager.OnResetGameSceneUi?.Invoke();
             ActionManager.ToggleLevelUI?.Invoke(true);
             ActionManager.OnStartFruitSpwan?.Invoke();
         }
@@ -81,6 +80,9 @@ namespace FruitCutter
         {
             currentLevelState = LevelState.None;
             ActionManager.ToggleGameOverUI?.Invoke(true);
+            ActionManager.ToggleLevelUI?.Invoke(false);
+            ActionManager.ToggleGameSceneUI?.Invoke(false);
+            
         }
         private void ToggleImageTracker(bool isActive)
         {

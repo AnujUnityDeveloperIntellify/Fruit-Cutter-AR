@@ -27,17 +27,23 @@ namespace FruitCutter
         }
         void Start()
         {
-#if UNITY_EDITOR
-            GameManager.currentLevelState = LevelState.Start;
-            ActionManager.OnStartCounter?.Invoke();
-#endif
+
         }
         private void OnEnable()
         {
+           // Debug.LogError("CU State "+ GameManager.currentLevelState);
             ActionManager.OnStartCounter += StartCounter;
             ActionManager.OnResetGameSceneUi += ResetGameSceneUI;
             ActionManager.ToggleLevelUI += ToggleLevelUI;
             ActionManager.OnUpdatePlayerScore += UpdateScoreTxt;
+
+
+
+            ActionManager.OnResetGameSceneUi?.Invoke();
+#if UNITY_EDITOR
+            GameManager.currentLevelState = LevelState.Start;
+            ActionManager.OnStartCounter?.Invoke();
+#endif
 
         }
         private void OnDisable()
@@ -72,7 +78,7 @@ namespace FruitCutter
 
             countDownTxt.gameObject.SetActive(false);
             ActionManager.OnlevelStart?.Invoke();
-
+            ResetCounterTxt();
         }
         private IEnumerator AnimateText(string message)
         {
@@ -95,9 +101,13 @@ namespace FruitCutter
 
         private void ResetGameSceneUI()
         {
-            scoreText.text = "";
+            scoreText.text = "0";
         }
-
+        private void ResetCounterTxt()
+        {
+            countDownTxt.text = "";
+            countDownTxt.fontSize = startFontSize;
+        }
         private void UpdateScoreTxt(int value)
         {
             scoreText.text = value.ToString();  

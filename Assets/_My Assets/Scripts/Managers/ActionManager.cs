@@ -23,6 +23,7 @@ namespace FruitCutter
         internal static Action OnResetAllFruits;
         internal static Action OnStopFruitSpwan;
         internal static Action<Rigidbody> OnDeactivateFruit;
+        internal static Action<Rigidbody> OnResetBomb;
 
         internal static Action OnlevelStart;
         internal static Action OnGameOver;
@@ -35,6 +36,7 @@ namespace FruitCutter
         internal static Action<int> OnUpdatePlayerScore;
 
         internal static Action OnPlayFruitCutAudio;
+        internal static Action OnPlayGrenadeBlastAudio;
     }
 }
 
