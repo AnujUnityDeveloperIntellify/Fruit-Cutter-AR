@@ -129,6 +129,7 @@ namespace FruitCutter
             if(value > 0)
             {
                 HighestScoreHolder.SetActive(true);
+                highestScoreText.text = value.ToString();   
             }
             else
             {

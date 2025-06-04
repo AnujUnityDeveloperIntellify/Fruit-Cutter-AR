@@ -86,10 +86,11 @@ namespace FruitCutter
         private void StopFruitSpwan()
         {
             StopCoroutine(spwanFruit_Coroutine);
-            ActionManager.OnResetAllFruits?.Invoke();   
+           // ActionManager.OnResetAllFruits?.Invoke();
         }
         private IEnumerator SpawningFruit()
         {
+            
             yield return new WaitForSeconds(1.0f);
             while (GameManager.currentLevelState == LevelState.Start)
             {

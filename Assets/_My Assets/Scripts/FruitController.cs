@@ -9,12 +9,14 @@ namespace FruitCutter
     public class FruitController : MonoBehaviour
     {
         MeshRenderer mr;
+        SphereCollider sphereCollider;
         [SerializeField] SpriteRenderer juiceSprite;
         private float rotationForce = 200;
         private Rigidbody rbFruit;
         private bool isRotation;
         private void Awake()
         {
+            sphereCollider= GetComponent<SphereCollider>();
             rbFruit = GetComponent<Rigidbody>();
             mr = GetComponent<MeshRenderer>();
             juiceSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -48,7 +50,7 @@ namespace FruitCutter
         }
         internal void OnFruitCut()
         {
-
+            sphereCollider.enabled = false;
             mr.enabled = false;
             isRotation = false;
             ActionManager.RotateSpriteTowardCamera?.Invoke(juiceSprite);
@@ -61,6 +63,7 @@ namespace FruitCutter
         }
         private void OnReset()
         {
+            sphereCollider.enabled = true;
             mr.enabled = true;
             juiceSprite.gameObject.SetActive(false);
             rbFruit.isKinematic = false;

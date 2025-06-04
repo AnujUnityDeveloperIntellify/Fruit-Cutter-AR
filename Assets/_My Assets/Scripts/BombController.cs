@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace FruitCutter
@@ -58,9 +59,11 @@ namespace FruitCutter
           
             ActionManager.OnStopFruitSpwan?.Invoke();
             ActionManager.OnPlayGrenadeBlastAudio?.Invoke();
-            //Debug.LogError("OnBomb Blast");
+           // Debug.LogError("OnBomb Blast");
             bombMR.enabled = false;
-            
+#if UNITY_EDITOR
+          //  EditorApplication.isPaused = true;
+#endif
             bombPS.time = 0f;
             bombPS.Play();
             Invoke("OverLevel", 0.4f);
