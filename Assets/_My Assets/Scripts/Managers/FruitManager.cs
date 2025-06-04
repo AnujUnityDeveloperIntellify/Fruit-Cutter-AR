@@ -14,17 +14,17 @@ namespace FruitCutter
         private float spawnDistance;
 
         [Header("Launch Force Settings")]
-         private float minXForce = -0.2f;
-         private float maxXForce = 0.2f;
+         private float minXForce = -0.6f;
+         private float maxXForce = 0.6f;
          private float minYForce = 2f;
          private float maxYForce = 2.8f;
 
-        [SerializeField] private int fruitCount;
-        [SerializeField] private GameObject currentFruit;
 
         [SerializeField] private List<Rigidbody> AllFruitLists;
         [SerializeField] private List<Rigidbody> activeFruits = new();
-        private Coroutine spwanFruit_Coroutine;
+        private Coroutine FruitGun1;
+        private Coroutine FruitGun2;
+        private Coroutine FruitGun3;
         [SerializeField] private Vector3 initialFruitPos;
         private void OnEnable()
         {
@@ -81,19 +81,25 @@ namespace FruitCutter
         private void StartFruitSpwan()
         {
             ActionManager.OnResetAllFruits?.Invoke();
-            spwanFruit_Coroutine = StartCoroutine(SpawningFruit());
+            FruitGun1 = StartCoroutine(SpawningFruitGun1());
+            Invoke("InitiateFruitGun2", 4f);
+            Invoke("InitiateFruitGun3", 8f);
         }
         private void StopFruitSpwan()
         {
-            StopCoroutine(spwanFruit_Coroutine);
+            StopCoroutine(FruitGun1);
+            StopCoroutine(FruitGun2);
+            StopCoroutine(FruitGun3);
+
            // ActionManager.OnResetAllFruits?.Invoke();
         }
-        private IEnumerator SpawningFruit()
+        private IEnumerator SpawningFruitGun1()
         {
-            
+            float randomWait;
             yield return new WaitForSeconds(1.0f);
             while (GameManager.currentLevelState == LevelState.Start)
             {
+                randomWait = Random.Range(0.9f, 1.4f);
                 List<Rigidbody> inactiveFruits = GetInactiveFruits(AllFruitLists);
                 if (inactiveFruits.Count > 0)
                 {
@@ -101,8 +107,46 @@ namespace FruitCutter
                     ActionManager.OnRespawnFruit?.Invoke(selected);
                 }
                // yield break;
-              yield return new WaitForSeconds(1.0f); 
+              yield return new WaitForSeconds(randomWait); 
             }
+        }
+        private IEnumerator SpwawningFruitGun2()
+        {
+            float randomWait;
+            while (GameManager.currentLevelState == LevelState.Start)
+            {
+                randomWait = Random.Range(0.6f, 1.2f);
+                List<Rigidbody> inactiveFruits = GetInactiveFruits(AllFruitLists);
+                if (inactiveFruits.Count > 0)
+                {
+                    Rigidbody selected = inactiveFruits[Random.Range(0, inactiveFruits.Count)];
+                    ActionManager.OnRespawnFruit?.Invoke(selected);
+                }
+                yield return new WaitForSeconds(randomWait);
+            }
+        }
+        private IEnumerator SpwawningFruitGun3()
+        {
+            float randomWait;
+            while (GameManager.currentLevelState == LevelState.Start)
+            {
+                randomWait = Random.Range(0.8f, 1.6f);
+                List<Rigidbody> inactiveFruits = GetInactiveFruits(AllFruitLists);
+                if (inactiveFruits.Count > 0)
+                {
+                    Rigidbody selected = inactiveFruits[Random.Range(0, inactiveFruits.Count)];
+                    ActionManager.OnRespawnFruit?.Invoke(selected);
+                }
+                yield return new WaitForSeconds(randomWait);
+            }
+        }
+        private void InitiateFruitGun2()
+        {
+            FruitGun2 = StartCoroutine(SpwawningFruitGun2());
+        }
+        private void InitiateFruitGun3()
+        {
+            FruitGun3 = StartCoroutine(SpwawningFruitGun3());
         }
         private List<Rigidbody> GetInactiveFruits(List<Rigidbody> fruitLists)
         {
