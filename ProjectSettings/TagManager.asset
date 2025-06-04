@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Fruit
   - Ground
   - Blade
+  - Fruit
   - Bomb
   layers:
   - Default
@@ -16,9 +16,9 @@ TagManager:
   - Water
   - UI
   - Fruit
-  - Ground
-  - Blade
   - Bomb
+  - Blade
+  - 
   - 
   - 
   - 

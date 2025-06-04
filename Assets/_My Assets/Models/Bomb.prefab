@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 86465307022736644}
   - component: {fileID: 1771154694333728999}
   - component: {fileID: 7408859392381164446}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Bomb
   m_TagString: Bomb
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 462763914313303276}
   - component: {fileID: 3527488424889861628}
   - component: {fileID: 1503248185322360529}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BlastParticleSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}

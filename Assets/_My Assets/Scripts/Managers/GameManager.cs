@@ -36,7 +36,7 @@ namespace FruitCutter
             ActionManager.OnGameOver += GameOver;
             ActionManager.OnlevelStart += LevelStart;
             ActionManager.ToggleImageTracker += ToggleImageTracker;
-            
+
         }
         private void OnDisable()
         {
@@ -48,7 +48,7 @@ namespace FruitCutter
         private void OnTargetStatusChanged(ObserverBehaviour behaviour, TargetStatus targetStatus)
         {
             TargetStatusTxt.text = $" {targetStatus.Status} | {targetStatus.StatusInfo}";
-            if(targetStatus.Status == Status.TRACKED)
+            if (targetStatus.Status == Status.TRACKED)
             {
                 if (currentLevelState == LevelState.YetToStart)
                 {
@@ -56,7 +56,7 @@ namespace FruitCutter
                     ActionManager.OnStartCounter?.Invoke();
                 }
             }
-            else if (targetStatus.Status == Status.EXTENDED_TRACKED)
+            else 
             {
                 if (currentLevelState == LevelState.Start)
                 {
@@ -69,7 +69,7 @@ namespace FruitCutter
         }
         private void LevelStart()
         {
-            ActionManager.OnResetPlayerData?.Invoke();  
+            ActionManager.OnResetPlayerData?.Invoke();
             ActionManager.ToggleLevelUI?.Invoke(true);
             ActionManager.OnStartFruitSpwan?.Invoke();
         }
@@ -81,7 +81,7 @@ namespace FruitCutter
             ActionManager.ToggleGameOverUI?.Invoke(true);
             ActionManager.ToggleLevelUI?.Invoke(false);
             ActionManager.ToggleGameSceneUI?.Invoke(false);
-            
+
         }
         private void ToggleImageTracker(bool isActive)
         {
@@ -97,7 +97,7 @@ namespace FruitCutter
         private IEnumerator RefreshObserver()
         {
             observerBehaviour.enabled = false;
-            yield return null; 
+            yield return null;
             observerBehaviour.enabled = true;
         }
     }

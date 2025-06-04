@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vuforia:
     vuforiaLicenseKey: Abn4zSv/////AAABmb4Xo7153kcTqqCZAh/0h/k78rzmAsp+AqHHu/VsqAEH3CviUKtXsIYCqgs/mHJVmALnsLlzA6OhTRV4TK9lmzfAZN9Uq8VAQ5Q0UAgN7imzc4G/HCxHY5ugTSN1wgAkEychD4LhRfJsQPmiGxG7Zy0nfNtZO4fhERx2B2o6KQqhI/78ONmT6KiNhN8SM3cgTp7cIZMh8TWuzZgO73WZXGKs5p7q6WVSjnieOB3MlPoaJZRMI7jcMVyScpuIO61TwigS9Qcx6UsLcRoboSoVVzorbQ5hOu1NMGEQTB/qi6CtPnf+F4cdED+Pwv4Fh3/tahnsImkOAaq6wwDUErMpfn+FNn8qLx86ZclGRu8POIof
-    ufoLicenseKey: QWZqQS91Ly8vLy8vQUFBQUtMVlNLTzVjSFVyNXNHWHkwdHg3ZWxtTDRidHB0cHFGREhtQmVvdG84WTNxZmt4bnNyNkVmbVFQYjA2UlppVm1RQUF4eXY2eGtwMW5lK1lqQ1ROQmV4S1NUMEpiREc4VE5qbzRWYUROSVZDVzZKcGM2YlhKaU4rMy9ZUTN6SFd0bTZLVDBxYnB0M2xPSnhVdi9POEhzU2U0UmJaMklMOVoxMDBrVi9ha0RPZnBBamJhTWNKRFF4WURGd3hoOEdHbzdwZWRXRHN1ODVxbEdnOUxqTk55c2hQV2ZyRFFqNjY4Q0hudW9TQko5N0QwTUdyZmxQSXVCZEdIb25XWFRNWXZnSWoxekJpZnFhR1pTdEp2UG5jdE1xUWpwZ0UyZ3RJaU5IejZiVmQwdzQvVFFZRzFCSlFtOVFQR3NPbS84RzJNZXJwMDdHVWFSYWJ6VUhHQnYwZ0M5aFhaazJBeUlPc0tDZ0FoVFpCSHE1UGg=
+    ufoLicenseKey: QVJCUmxhdi8vLy8vQUFBQUtCQU9DU0tXRFVzbmdPUkVicUIzL2hvNmRLOW9ydzV0Z1RCMUUrV3Fla0RxWmZ2cllMMzN1QU02K2x4a1hTWHZLS2JBZXFWNHdpUERWeXZpZzRnVFllL0NkZDZHV3RWcGZLcW9ja0w4NHlSMXhJMkhzdTMwWmhsOEU2SlRDWjkzVHRJVFM5VkZIdlBGU25MWjViZ0xKZ3lTd2lnM28vVzBqZXlkWkNRbEZPUVFvSFdsdHdBZUFuWnVJbHFUZU1PSDlBTGZIVm8ydlVaT1N6c05aajRmL2VCOEJjd3JvYlJvdm9BcytyUWVSSVNkOUFxU3VQanZVU2tYRDNhc2UvV00veE5KT0ZmbUdlQzZOaGQ5THMxcnFMK0k1YkRjNDNja051UElJOGw0bmVCRk9WcG9aNXk4RWFnZHFmaWFSRGRickNZSDhLdlpaWnlqVnFuZlB3Ym5DR0YvWHlkKzZaYXZKQmhRZUZmdk8zVEY=
     delayedInitialization: 0
     cameraFocusModeSetting: 2
     cameraDeviceModeSetting: -1
@@ -24,18 +24,18 @@ MonoBehaviour:
     shareRecordingsInITunes: 0
     logLevel: 0
     version: 11.2.4
-    eulaAcceptedVersions: '{"Values":["10.7","10.12","9.6","8.3","9.3","9.4","9.5","9.7","9.8","0.0","10.16","8.0","8.1","7.5","7.2","7.1","8.5","8.6","10.6","11.2"]}'
+    eulaAcceptedVersions: '{"Values":["","10.7","10.12","9.6","8.3","9.3","9.4","9.5","9.7","9.8","0.0","10.16","8.0","8.1","7.5","7.2","7.1","8.5","8.6","10.6","11.2"]}'
   database:
     disableModelExtraction: 0
   plugins:
-    pluginDirectory: asset://Vuforia
+    pluginDirectory: Vuforia
   shaders:
     depthMaskShader: {fileID: 4800000, guid: 9894afa5f3a5e4bbca625981beb1b20e, type: 3}
     outlineShader: {fileID: 4800000, guid: 88d3b6b5cf364476ca39fcec255331b1, type: 3}
     unlitTransparentShader: {fileID: 10750, guid: 0000000000000000f000000000000000,
       type: 0}
   runtimeResources:
-    register: {fileID: 11400000, guid: 41fc44d3a90764cc7b50f1019f2d8310, type: 2}
+    register: {fileID: 11400000, guid: caeba6ecda451416c803389918ddea4a, type: 2}
   videoBackground:
     numDivisions: 2
     videoBackgroundShader: {fileID: 4800000, guid: 144dfca22ac584ade9e538e24a5ddded,
