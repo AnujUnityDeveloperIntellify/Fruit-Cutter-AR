@@ -24,14 +24,11 @@ namespace FruitCutter
         // Start is called before the first frame update
         void Start()
         {
-            /*if (!TestTarget)
-            {
-                ActionManager.ToggleImageTracker?.Invoke(false);
-            }*/
             if (observerBehaviour)
             {
                 observerBehaviour.OnTargetStatusChanged += OnTargetStatusChanged;
             }
+            ActionManager.ToggleImageTracker?.Invoke(false);
         }
         private void OnEnable()
         {
@@ -39,40 +36,13 @@ namespace FruitCutter
             ActionManager.OnGameOver += GameOver;
             ActionManager.OnlevelStart += LevelStart;
             ActionManager.ToggleImageTracker += ToggleImageTracker;
+            
         }
         private void OnDisable()
         {
             ActionManager.ToggleImageTracker -= ToggleImageTracker;
             ActionManager.OnlevelStart -= LevelStart;
             ActionManager.OnGameOver -= GameOver;
-        }
-
-        public void OnTragetImageFound()
-        {
-           /* if (TestTarget)
-            {
-                TargetStatusTxt.text = "Target Found";
-            }*/
-
-#if UNITY_ANDROID
-           /* if (currentLevelState == LevelState.YetToStart)
-            {
-                currentLevelState = LevelState.Start;
-                ActionManager.OnStartCounter?.Invoke();
-            }*/
-#endif
-        }
-        public void OnTargetImageLost()
-        {
-           /* if (TestTarget)
-            {
-                TargetStatusTxt.text = "Target Lost";
-            }*/
-
-           /* if (currentLevelState == LevelState.Start)
-            {
-                ActionManager.OnGameOver?.Invoke();
-            }*/
         }
 
         private void OnTargetStatusChanged(ObserverBehaviour behaviour, TargetStatus targetStatus)
@@ -91,9 +61,11 @@ namespace FruitCutter
                 if (currentLevelState == LevelState.Start)
                 {
                     ActionManager.OnStopFruitSpwan?.Invoke();
+                    ActionManager.OnResetAllFruits?.Invoke();
                     ActionManager.OnGameOver?.Invoke();
                 }
             }
+            //if (targetStatus.Status == Status.EXTENDED_TRACKED)
         }
         private void LevelStart()
         {
